@@ -13,19 +13,28 @@ app.set("views",path.join(__dirname,"views"))
 app.use(express.static(path.join(__dirname,"public")))//
 
 let posts=[
-  {username:"Sangram",
+  {id:"1a",
+    username:"Sangram",
     content:"Hello there"
   },
-  {username:"Raju",
+  {
+    id:"2b",
+    username:"Raju",
     content:"Small step to understand REST"
   },
-  {username:"Shyan",
+  {
+    id:"3c",
+    username:"Shyan",
     content:"REST means representational state change"
   },
-  {username:"Krishna",
+  {
+    id:"4d",
+    username:"Krishna",
     content:"Get,post,put,patch,delete"
   },
-  {username:"Hari",
+  {
+    id:"5e",
+    username:"Hari",
     content:"We will see all"
   },
 ];
@@ -45,6 +54,13 @@ app.post("/posts",(req,res)=>{
   let{username,content}=req.body
   posts.push({username,content})
   res.redirect("/posts")
+})
+
+app.get("/posts/:id",(req,res)=>{
+  let{id}=req.params;
+  let post=posts.find((p)=>id===p.id)
+  console.log(post)
+  res.render("show.ejs",{post})
 })
 
 app.listen(port,()=>{
