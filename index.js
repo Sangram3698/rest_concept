@@ -1,6 +1,7 @@
 const express=require("express")
 const dotenv=require("dotenv")
 const path=require("path")
+const {v4:uuidv4}=require("uuid")
 
 const app=express()
 dotenv.config()
@@ -13,27 +14,27 @@ app.set("views",path.join(__dirname,"views"))
 app.use(express.static(path.join(__dirname,"public")))//
 
 let posts=[
-  {id:"1a",
+  {id:uuidv4(),
     username:"Sangram",
     content:"Hello there"
   },
   {
-    id:"2b",
+    id:uuidv4(),
     username:"Raju",
     content:"Small step to understand REST"
   },
   {
-    id:"3c",
+    id:uuidv4(),
     username:"Shyan",
     content:"REST means representational state change"
   },
   {
-    id:"4d",
+    id:uuidv4(),
     username:"Krishna",
     content:"Get,post,put,patch,delete"
   },
   {
-    id:"5e",
+    id:uuidv4(),
     username:"Hari",
     content:"We will see all"
   },
@@ -51,8 +52,9 @@ app.get("/posts/new",(req,res)=>{
 })
 
 app.post("/posts",(req,res)=>{
+  let id=uuidv4()
   let{username,content}=req.body
-  posts.push({username,content})
+  posts.push({id,username,content})
   res.redirect("/posts")
 })
 
@@ -61,6 +63,20 @@ app.get("/posts/:id",(req,res)=>{
   let post=posts.find((p)=>id===p.id)
   console.log(post)
   res.render("show.ejs",{post})
+})
+
+app.patch("/posts/:id",(req,res)=>{
+  let {id}=req.params;
+  let newContent=req.body.content
+  let post=posts.find((p)=>id===p.id)
+  post.content=newContent
+  console.log(id)
+  res.send("Patch working")
+})
+app.get("/posts/:id/edit",(req,res)=>{
+  let {id}=req.params;
+  let post=posts.find((p)=>id==p.id)
+  res.render("edit.ejs",{post})
 })
 
 app.listen(port,()=>{
