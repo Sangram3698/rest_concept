@@ -11,7 +11,7 @@
   <h3 class="user">Name: @ <%= post.username %></h3>
   <div class="post">
 
-    <form action="http://localhost:5000/post" method="post">
+    <form action="http://localhost:5000/posts/<%= post.id %>/?_method=PATCH" method="post">
       <textarea name="content" rows="10" cols="35"><%= post.content %></textarea>
       <button type="submit">Submit</button>
     </form>

@@ -14,6 +14,10 @@
       <p class="content"><%= post.content %></p>
       <a href="http://localhost:5000/posts/<%= post.id %>">See details</a>
       <a href="http://localhost:5000/posts/<%= post.id %>/edit">Edit</a>
+      <br>
+      <form action="http://localhost:5000/posts/<%= post.id %>/?_method=DELETE" method="post">
+        <button>DELETE</button>
+      </form>
     </div>
   <% } %>
   <br>
